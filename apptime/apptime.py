@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
-@app.route("/apptime/devices/<id>/usage", methods=["POST"])
+@app.route("/apptime/devices/<id>/usage", methods=["GET", "POST"])
 def hello(id):
     return flask.jsonify(**{ "usage": [
                    {"Appname": "Super mario brothers"},
