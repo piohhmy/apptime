@@ -24,6 +24,12 @@ def usage(id):
                        {"category": "Game", "apps" : [
                               {"name": "Super mario brothers"},
                               {"name": "Frogger"} ]
+                       },
+                       {"category": "Social", "apps" : [
+                              {"name": "Facebook"},
+                              {"name": "Twitter"},
+                              {"name": "Snapchat"},
+                               ]
                        }
                        ]
         })
