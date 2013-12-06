@@ -32,13 +32,13 @@ Response:
 ```
 ### POST /apptime/device
 ```json
-{"id":61de5f49-c5b8-4afe-ae52-6496d3044770}
+{"id":"61de5f49-c5b8-4afe-ae52-6496d3044770"}
 ```
 ### GET /apptime/user/<username>/devices
 ```json
-{'devices':[{'device_name': 'Galaxy Nexus',  'id': '123'}]}
+{"devices":[{"device_name": "Galaxy Nexus",  "id": "123"}]}
 ```
 ### GET /apptime/users
 ```json
-{'users':[{'name': 'Tommy'}, {'name': 'Sandy'}]}
+{"users":[{"name": "Tommy"}, {"name": "Sandy"}]}
 ```
