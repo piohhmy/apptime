@@ -59,7 +59,7 @@ def user_devices(username):
 @app.route("/apptime/users", methods=["GET"])
 @crossdomain(origin='*')
 def users():
-    return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sandy'}]})
+    return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sally'}]})
 
 @app.route("/apptime/user/<username>/curfew", methods=["POST"])
 @crossdomain(origin='*')
