@@ -6,12 +6,17 @@ db = mongoclient.get_default_database()
 collection = db.usage
 
 
-def find_rec(id):
-	collection.find_one({"_id": id})
+def find_rec(username):
+    records = collection.find({"username": username})
+    ret_rec = []
+    for record in records:
+        ret_rec.append({"name": record["usage"]["name"], "weekly_usage": record["usage"]["usage"]})
+        
+    return ret_rec
 
 def insert(username, record):	
-	entry = {"username": username, "usage": record}
-	return collection.insert(entry)
+    entry = {"username": username, "usage": record}
+    return collection.insert(entry)
 	
 def empty():
-	collection.remove()
+    collection.remove()
