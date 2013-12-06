@@ -38,7 +38,7 @@
           
           //$("#appdata").html(GetAppCollapsibleContent(applicationsObject.usage));
           GetAppCollapsibleContent("#container",applicationsObject.usage);
-          var devicesObject = GetDevices("userid");
+          var devicesObject = GetDevices("Sally");
           $("#devicesdata").html(GetDeviceCollapsibleContent(devicesObject.devices));
           $('div[data-role=collapsible]').trigger('create');
           $("select").selectmenu("refresh", true);

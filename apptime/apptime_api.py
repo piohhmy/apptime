@@ -10,6 +10,8 @@ from apptime import mongo_repo
 app = Flask(__name__, static_url_path='')
 logging.basicConfig(level=logging.INFO)
 
+active_curfew =[] 
+
 @app.route('/')
 @crossdomain(origin='*')
 def root():
@@ -26,9 +28,6 @@ def usage(username):
                        },
                        {"category": "Social", "apps" : 
                               mongo_repo.find_rec(username, "Social")
-                       },
-                       {"category": "Other", "apps" : 
-                              mongo_repo.find_rec(username, "Other")
                        }
                        ]
         })
@@ -36,7 +35,11 @@ def usage(username):
         logging.info("Received %s", flask.request.data)
         cat = categorize(flask.request.get_json(force=True))
         mongo_repo.insert(username, cat, flask.request.get_json(force=True))
-        return flask.jsonify(**{})
+        if username in active_curfew:
+            active_curfew.remove(username)
+            return flask.jsonify(**{"curfew_expired":True})
+        else:
+            return flask.jsonify(**{"curfew_expired":False})
 
 @app.route("/apptime/device", methods=["POST"])
 @crossdomain(origin='*')
@@ -53,12 +56,18 @@ def user_devices(username):
 @app.route("/apptime/users", methods=["GET"])
 @crossdomain(origin='*')
 def users():
-    return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sandy'}]})
+    return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sally'}]})
+
+@app.route("/apptime/user/<username>/curfew", methods=["POST"])
+@crossdomain(origin='*')
+def curfew(username):
+    active_curfew.append(username)
+    return flask.jsonify(**{})
 
 def categorize(data):
-    if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
+    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
         return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat"]:
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Phone"]:
         return "Social"
     else:
         return "Other"
