@@ -58,7 +58,7 @@ def users():
 def categorize(data):
     if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
         return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat"]:
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn"]:
         return "Social"
     else:
         return "Other"
