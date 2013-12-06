@@ -91,6 +91,12 @@ function GetApps(userid)
     return getData("http://apptime.herokuapp.com/apptime/user/"+userid+"/apps/usage");
 }
 
+function enableCurfew(userid)
+{
+    //Hardcoding
+    return postData("http://apptime.herokuapp.com/apptime/user/Sally/curfew")
+}
+
 
 function getData(serviceUrl)
 {
@@ -103,6 +109,22 @@ function getData(serviceUrl)
         success: function(data,status,xhr){
             jsonObj = data;
         },
+        error:function(xhr,status,error){
+            console.error(status+':'+error);
+            jsonObj=null;
+        }
+    });
+    return jsonObj;
+}
+
+function postData(serviceUrl)
+{
+    var jsonObj;
+    $.ajax({
+        async:true,
+        type:'POST',
+        url:serviceUrl,
+        dataType: "json",
         error:function(xhr,status,error){
             console.error(status+':'+error);
             jsonObj=null;
