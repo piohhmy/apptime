@@ -4,17 +4,20 @@ import json
 import logging
 import os
 import uuid
+from flask_helper import crossdomain
 
 
 app = Flask(__name__, static_url_path='')
 logging.basicConfig(level=logging.INFO)
 
 @app.route('/')
+@crossdomain(origin='*')
 def root():
   return app.send_static_file('index.html')
 
 
 @app.route("/apptime/devices/<id>/usage", methods=["GET", "POST"])
+@crossdomain(origin='*')
 def usage(id):
     if flask.request.method == 'GET':
         return flask.jsonify(**{ "usage": [
@@ -29,12 +32,14 @@ def usage(id):
         return flask.jsonify(**{})
 
 @app.route("/apptime/device", methods=["POST"])
+@crossdomain(origin='*')
 def device():
     data = flask.request.get_json(force=True)
     logging.info("Registering new device for %s", data["name"])
     return flask.jsonify(**{"id":str(uuid.uuid4())})
 
 @app.route("/apptime/devices", methods=["GET"])
+@crossdomain(origin='*')
 def devices():
     return flask.jsonify(**{'devices':[{'device_name': 'Galaxy Nexus', 'user': 'Tommy', 'id': '123'}]})
 
