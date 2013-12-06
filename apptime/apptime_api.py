@@ -28,11 +28,15 @@ def usage(username):
                        },
                        {"category": "Social", "apps" : 
                               mongo_repo.find_rec(username, "Social")
+                       },
+                       {"category": "Other", "apps" : 
+                              mongo_repo.find_rec(username, "Other")
                        }
                        ]
         })
     if flask.request.method == 'POST':
         logging.info("Received %s", flask.request.data)
+        if(flask.request.get_json(force))
         cat = categorize(flask.request.get_json(force=True))
         mongo_repo.insert(username, cat, flask.request.get_json(force=True))
         if username in active_curfew:
@@ -65,12 +69,15 @@ def curfew(username):
     return flask.jsonify(**{})
 
 def categorize(data):
-    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
-        return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Phone"]:
-        return "Social"
-    else:
-        return "Other"
+    try:
+        if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
+            return "Game"
+        elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn"]:
+            return "Social"
+        else:
+            return "Other"
+    except KeyError as ex:
+        logging.exception("Bad Data: %s", data)
     
 def start_server():
     port = int(os.environ.get('PORT', 5000))
