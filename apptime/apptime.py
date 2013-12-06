@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
-@app.route("/apptime/devices/<id>/usage", methods=["GET", "POST"])
+@app.route("/apptime/devices/<id>/usage", methods=["POST", "GET"])
 def hello(id):
     return flask.jsonify(**{ "usage": [
                    {"Appname": "Super mario brothers"},
@@ -18,7 +18,6 @@ def hello(id):
 
 def start_server():
     port = int(os.environ.get('PORT', 5000))
-    app.debug = True
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == "__main__":
