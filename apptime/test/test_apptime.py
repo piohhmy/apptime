@@ -29,10 +29,10 @@ class TestAPI(unittest.TestCase):
                                     content_type='application/json')
         self.assertEqual(result.status_code, 200)
 
-    def test_get_devices_returns_ok(self):
-        result = self.test_app.get('/apptime/devices')
+    def test_get_user_devices_returns_ok(self):
+        result = self.test_app.get('/apptime/users/Tommy/devices')
         self.assertEqual(result.status_code, 200)
         self.assertIn('devices', result.data)
-        
+
 if __name__ == '__main__':
     unittest.main()
