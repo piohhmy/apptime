@@ -12,8 +12,10 @@ logging.basicConfig(level=logging.INFO)
 def usage(id):
     if flask.request.method == 'GET':
         return flask.jsonify(**{ "usage": [
-                       {"appname": "Super mario brothers", "category": "Game"},
-                       {"appname": "Frogger", "category": "Game" }
+                       {"category": "Game", "apps" : [
+                              {"name": "Super mario brothers"},
+                              {"name": "Frogger"} ]
+                       }
                        ]
         })
     if flask.request.method == 'POST':
