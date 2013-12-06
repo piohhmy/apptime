@@ -20,25 +20,22 @@ def root():
 @crossdomain(origin='*')
 def usage(username):
     if flask.request.method == 'GET':
-        record = mongo_repo.find_rec(username)
         return flask.jsonify(**{ "usage": [
-                       {"category": "Game", "apps" : [
-                              {"name": "Super Mario Brothers", "weekly_time": 10},
-                              {"name": "Candy Crush", "weekly_time": 230} ]
+                       {"category": "Game", "apps" :
+                              mongo_repo.find_rec(username, "Game")
                        },
-                       {"category": "Social", "apps" : [
-                              {"name": "Facebook", "weekly_time": 45},
-                              {"name": "Twitter", "weekly_time": 10},
-                              {"name": "Snapchat", "weekly_time": 40},
-                               ]
+                       {"category": "Social", "apps" : 
+                              mongo_repo.find_rec(username, "Social")
                        },
-                       {"category": "Other", "apps" : record
+                       {"category": "Other", "apps" : 
+                              mongo_repo.find_rec(username, "Other")
                        }
                        ]
         })
     if flask.request.method == 'POST':
         logging.info("Received %s", flask.request.data)
-        mongo_repo.insert(username, flask.request.get_json(force=True))
+        cat = categorize(flask.request.get_json(force=True))
+        mongo_repo.insert(username, cat, flask.request.get_json(force=True))
         return flask.jsonify(**{})
 
 @app.route("/apptime/device", methods=["POST"])
@@ -58,6 +55,14 @@ def user_devices(username):
 def users():
     return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sandy'}]})
 
+def categorize(data):
+    if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
+        return "Game"
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat"]:
+        return "Social"
+    else:
+        return "Other"
+    
 def start_server():
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
