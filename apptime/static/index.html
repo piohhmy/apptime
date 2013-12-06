@@ -34,7 +34,7 @@
             $("#defaultChild").after('<option value="'+index+'">'+user.name+'</option>');    
           });
           
-          var applicationsObject = GetApps("userid");
+          var applicationsObject = GetApps("Sally");
           
           //$("#appdata").html(GetAppCollapsibleContent(applicationsObject.usage));
           GetAppCollapsibleContent("#container",applicationsObject.usage);
@@ -42,6 +42,12 @@
           $("#devicesdata").html(GetDeviceCollapsibleContent(devicesObject.devices));
           $('div[data-role=collapsible]').trigger('create');
           $("select").selectmenu("refresh", true);
+          function doPoll(){
+              var applicationsObject = GetApps("Sally");
+              GetAppCollapsibleContent("#container",applicationsObject.usage);
+              setTimeout(doPoll,5000);
+        }
+          doPoll();
       });
   </script>
 </head>
