@@ -40,6 +40,11 @@ def device():
     logging.info("Registering new device for %s", data["name"])
     return flask.jsonify(**{"id":str(uuid.uuid4())})
 
+@app.route("/apptime/devices", methods=["GET"])
+def devices():
+    return flask.jsonify(**{'devices':[{'device_name': 'Galaxy Nexus', 'user': 'Tommy', 'id': '123'}]})
+
+
 def start_server():
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
