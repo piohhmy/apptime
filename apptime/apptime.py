@@ -22,8 +22,8 @@ def usage(id):
 
 @app.route("/apptime/device", methods=["POST"])
 def device():
-    data = json.loads(json.dumps(flask.request.data))
-    #logging.info("Registering new device for %s", data["name"])
+    data = flask.request.get_json(force=True)
+    logging.info("Registering new device for %s", data["name"])
     return flask.jsonify(**{"id":str(uuid.uuid4())})
 
 def start_server():
