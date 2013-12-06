@@ -3,24 +3,14 @@ import flask
 import json
 import logging
 import os
-import pymongo
 import uuid
+
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 @app.route("/apptime/devices/<id>/usage", methods=["GET", "POST"])
-
-#client = MongoClient('mongodb://heroku_app20099764:94dacdf5097e43d72c784cdb50f0186a@ds053698.mongolab.com:53698/heroku_app20099764')
-#db = client.get_default_database()
-#collection = db.apptime_db
-
-def hello(id):
-    return flask.jsonify(**{ "usage": [
-                   {"Appname": "Super mario brothers"},
-                   {"Appname": "Frogger"}
-                   ]
-    })
 def usage(id):
     if flask.request.method == 'GET':
         return flask.jsonify(**{ "usage": [
