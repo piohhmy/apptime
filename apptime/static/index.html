@@ -42,6 +42,12 @@
           $("#devicesdata").html(GetDeviceCollapsibleContent(devicesObject.devices));
           $('div[data-role=collapsible]').trigger('create');
           $("select").selectmenu("refresh", true);
+          function doPoll(){
+              var applicationsObject = GetApps("Sally");
+              GetAppCollapsibleContent("#container",applicationsObject.usage);
+              setTimeout(doPoll,5000);
+        }
+          doPoll();
       });
   </script>
 </head>

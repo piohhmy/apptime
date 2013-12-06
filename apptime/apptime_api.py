@@ -28,9 +28,6 @@ def usage(username):
                        },
                        {"category": "Social", "apps" : 
                               mongo_repo.find_rec(username, "Social")
-                       },
-                       {"category": "Other", "apps" : 
-                              mongo_repo.find_rec(username, "Other")
                        }
                        ]
         })
@@ -68,9 +65,9 @@ def curfew(username):
     return flask.jsonify(**{})
 
 def categorize(data):
-    if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
+    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
         return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn"]:
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Phone"]:
         return "Social"
     else:
         return "Other"
