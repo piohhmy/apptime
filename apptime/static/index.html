@@ -34,11 +34,11 @@
             $("#defaultChild").after('<option value="'+index+'">'+user.name+'</option>');    
           });
           
-          var applicationsObject = GetApps("userid");
+          var applicationsObject = GetApps("Sally");
           
           //$("#appdata").html(GetAppCollapsibleContent(applicationsObject.usage));
           GetAppCollapsibleContent("#container",applicationsObject.usage);
-          var devicesObject = GetDevices("userid");
+          var devicesObject = GetDevices("Sally");
           $("#devicesdata").html(GetDeviceCollapsibleContent(devicesObject.devices));
           $('div[data-role=collapsible]').trigger('create');
           $("select").selectmenu("refresh", true);
