@@ -10,14 +10,15 @@ class TestAPI(unittest.TestCase):
         self.test_app = apptime_api.app.test_client()
 
     def test_get_usage_returns_json_resp(self):
-        result = self.test_app.get('/apptime/devices/123/usage')
+        result = self.test_app.get('/apptime/user/Sam/apps/usage')
         self.assertEqual(result.status_code, 200)
         self.assertIn('usage', result.data)
 
     def test_post_usage_returns_ok(self):
-        result = self.test_app.post('/apptime/devices/123/usage',
+        result = self.test_app.post('/apptime/user/Bobby/apps/usage',
                                     data=json.dumps({'usage': [
-                                                               {'appname':'Angry Birds'}
+                                                               {'appname':'Angry Birds',
+                                                                'usage': 10}
                                                                ]
                                                          }),
                                     content_type='application/json')

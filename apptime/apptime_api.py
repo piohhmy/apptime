@@ -16,19 +16,19 @@ def root():
   return app.send_static_file('index.html')
 
 
-@app.route("/apptime/devices/<id>/usage", methods=["GET", "POST"])
+@app.route("/apptime/user/<username>/apps/usage", methods=["GET", "POST"])
 @crossdomain(origin='*')
-def usage(id):
+def usage(username):
     if flask.request.method == 'GET':
         return flask.jsonify(**{ "usage": [
                        {"category": "Game", "apps" : [
-                              {"name": "Super mario brothers"},
-                              {"name": "Frogger"} ]
+                              {"name": "Super Mario Brothers", "weekly_time": 10},
+                              {"name": "Candy Crush", "weekly_time": 230} ]
                        },
                        {"category": "Social", "apps" : [
-                              {"name": "Facebook"},
-                              {"name": "Twitter"},
-                              {"name": "Snapchat"},
+                              {"name": "Facebook", "weekly_time": 45},
+                              {"name": "Twitter", "weekly_time": 10},
+                              {"name": "Snapchat", "weekly_time": 40},
                                ]
                        }
                        ]
