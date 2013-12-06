@@ -1,1 +1,190 @@
-<h1>Apptime</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="jqm/jquery.mobile-min.css">
+  <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+  <title>Your New Application</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+  <style type="text/css">
+    /* Prevent copy paste for all elements except text fields */
+    *  { -webkit-user-select:none; -webkit-tap-highlight-color:rgba(255, 255, 255, 0); }
+    input, textarea  { -webkit-user-select:text; }
+  </style>
+  <script src="intelxdk.js"></script>
+  <script type="text/javascript">
+    /* This code is used to run as soon as Intel activates */
+    var onDeviceReady=function(){
+      //hide splash screen
+      intel.xdk.device.hideSplashScreen();
+    };
+    document.addEventListener("intel.xdk.device.ready",onDeviceReady,false);
+  </script>
+  <script type="application/javascript" src="js/jquery.min.js"></script>
+  <script type="application/javascript" src="jqm/jquery.mobile-min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script type="application/javascript" src="js/sandbox.js"></script>
+  <script type="text/javascript">    
+      $(function(){
+          var usersObject = GetUsers();
+          $.each(usersObject.users,function(index,user)
+          {
+            $("#defaultChild").after('<option value="'+index+'">'+user.name+'</option>');    
+          });
+          
+          var applicationsObject = GetApps("userid");
+          
+          //$("#appdata").html(GetAppCollapsibleContent(applicationsObject.usage));
+          GetAppCollapsibleContent("#container",applicationsObject.usage);
+          var devicesObject = GetDevices("userid");
+          $("#devicesdata").html(GetDeviceCollapsibleContent(devicesObject.devices));
+          $('div[data-role=collapsible]').trigger('create');
+          $("select").selectmenu("refresh", true);
+      });
+  </script>
+</head>
+
+<body>
+
+  <!-- content goes here-->
+  <div class="uwrap">
+    <div class="upage" data-role="page">
+      <div class="upage-outer">
+        <div data-role="header" class="container-group inner-element uib_w_1" data-uib="jquery_mobile/header" id="sb-jqm-main-header">
+          <h1>Sandbox AppTime Viewer</h1>
+          <div class="widget-container wrapping-col single-centered"></div>
+          <div class="widget-container content-area horiz-area wrapping-col left"></div>
+          <div class="widget-container content-area horiz-area wrapping-col right"></div>
+        </div>
+        <div class="upage-content">
+
+          <div class="grid grid-pad urow uib_row_1 row-height-1" data-uib="layout/row">
+            <div class="col uib_col_1 col-0_12-12" data-uib="layout/col">
+              <div class="widget-container content-area vertical-col">
+
+                <div class="table-thing with-label widget uib_w_2 d-margins" data-uib="jquery_mobile/select">
+                  <label class="narrow-control label-inline">Children</label>
+                  <div data-role="fieldgroup" class+ "wide-control"="">
+                    <select>
+                      <option value="0" id="defaultChild">Select the child</option>
+                    </select>
+                  </div>
+                </div>
+                <div data-role="collapsible-set" class="no_wrap widget uib_w_3 d-margins" data-uib="jquery_mobile/accordion" data-collapsed-icon="plus" data-expanded-icon="minus">
+                  <div data-role="collapsible" class="no_wrap widget uib_w_4" data-uib="jquery_mobile/collapsible" data-expanded-icon="grid" id="sb-jqm-collapsible-devices">
+                    <h4>Devices</h4>
+                    <div class="col uib_col_2 single-col" data-uib="layout/col">
+                      <div class="widget-container content-area vertical-col">
+                          <div id="devicesdata">
+                          </div>
+                        <span class="uib_shim"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-role="collapsible" class="no_wrap widget uib_w_5" data-uib="jquery_mobile/collapsible" data-expanded-icon="heart" id="sb-jqm-collapsible-apps">
+                    <h4>Apps</h4>
+                    <div class="col uib_col_3 single-col" data-uib="layout/col">
+                      <div class="widget-container content-area vertical-col">
+                          <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        <span class="uib_shim"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div data-role="collapsible" class="no_wrap widget uib_w_6" data-uib="jquery_mobile/collapsible" data-expanded-icon="forbidden" id="sb-jqm-collapsible-curfew">
+                    <h4>Curfew</h4>
+                    <div class="col uib_col_4 single-col" data-uib="layout/col">
+                      <div class="widget-container content-area vertical-col">
+
+                        <div class="table-thing with-label widget uib_w_7 d-margins" data-uib="jquery_mobile/select">
+                          <label class="narrow-control label-inline">Bedtime</label>
+                          <div data-role="fieldgroup" class+ "wide-control"="">
+                            <select id="sb-jqm-select-bedtime">
+                              <option>10pm</option>
+                              <option>11pm</option>
+                              <option>12pm</option>
+                              <option>1am</option>
+                              <option>2am</option>
+                              <option>3am</option>
+                              <option>4am</option>
+                              <option>5am</option>
+                              <option>6am</option>
+                              <option>7am</option>
+                              <option>8am</option>
+                              <option>9am</option>
+                              <option>10am</option>
+                              <option>11am</option>
+                              <option>12pm</option>
+                              <option>1pm</option>
+                              <option>2pm</option>
+                              <option>3pm</option>
+                              <option>4pm</option>
+                              <option>5pm</option>
+                              <option>6pm</option>
+                              <option>7pm</option>
+                              <option>8pm</option>
+                              <option>9pm</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="table-thing with-label widget uib_w_8 d-margins" data-uib="jquery_mobile/select">
+                          <label class="narrow-control label-inline">Waketime</label>
+                          <div data-role="fieldgroup" class+ "wide-control"="">
+                            <select id="sb-jqm-select-waketime">
+                              <option>5am</option>
+                              <option>6am</option>
+                              <option>7am</option>
+                              <option>8am</option>
+                              <option>9am</option>
+                              <option>10am</option>
+                              <option>11am</option>
+                              <option>12pm</option>
+                              <option>1pm</option>
+                              <option>2pm</option>
+                              <option>3pm</option>
+                              <option>4pm</option>
+                              <option>5pm</option>
+                              <option>6pm</option>
+                              <option>7pm</option>
+                              <option>8pm</option>
+                              <option>9pm</option>
+                              <option>10pm</option>
+                              <option>11pm</option>
+                              <option>12pm</option>
+                              <option>1am</option>
+                              <option>2am</option>
+                              <option>3am</option>
+                              <option>4am</option>
+                            </select>
+                          </div>
+                        </div><span class="uib_shim"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div data-role="controlgroup" class="uib-jqm-flex widget-container widget uib_w_9 d-margins" data-uib="jquery_mobile/button_group" data-type="horizontal">
+                  <a class="widget uib_w_10" data-uib="jquery_mobile/button" data-role="button" id="sb-jqm-button-update" data-icon="edit">Update</a>
+
+                  <a class="widget uib_w_12" data-uib="jquery_mobile/button" data-role="button" id="sb-jqm-button-close" data-icon="delete">Close</a>
+                </div><span class="uib_shim"></span>
+              </div>
+            </div>
+            <span class="uib_shim"></span>
+          </div>
+
+
+        </div>
+        <!-- /upage-content -->
+
+      </div>
+      <!-- /upage-outer -->
+
+    </div>
+    <!-- /upage -->
+
+  </div>
+  <!-- /uwrap -->
+</body>
+
+</html>
