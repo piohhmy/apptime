@@ -2,20 +2,20 @@
 function GetAppCollapsibleContent(containername,appList)
 {
     var htmlContent="";
-	var appNames=[];
-	var usages=[];
-	var allocated=[];
+    var appNames=[];
+    var usages=[];
+    var allocated=[];
     $.each(appList,function(index,appobj){
         $.each(appobj.apps,function(index,app){
-				appNames.push(app.name);
-				usages.push(app.weekly_time);
-				
+                appNames.push(app.name);
+                usages.push(app.weekly_usage);
+                
         });
         htmlContent+='</div></div></div>';
     });
-	
-	$(containername).highcharts({
-		chart: {
+    
+    $(containername).highcharts({
+        chart: {
                 type: 'bar'
             },
             title: {
@@ -46,8 +46,8 @@ function GetAppCollapsibleContent(containername,appList)
                 data: usages,
                 color:'RED'
             }]
-	});
-	
+    });
+    
     return htmlContent;
 }
 
@@ -56,8 +56,8 @@ function GetDeviceCollapsibleContent(devList)
     var htmlContent="";
     $.each(devList,function(index,devobj){
         htmlContent+='<div data-role="collapsible" class="no_wrap widget uib_w_3" data-uib="jquery_mobile/collapsible"> \
-	<h4>'+devobj.device_name+'</h4> \
-	<div class="col uib_col_2 single-col" data-uib="layout/col"> \
+    <h4>'+devobj.device_name+'</h4> \
+    <div class="col uib_col_2 single-col" data-uib="layout/col"> \
             <div class="widget-container content-area vertical-col">';
         htmlContent+='<div class="widget uib_w_6 no_wrap with-label d-margins" data-uib="jquery_mobile/slider"> \
                     <label class="narrow-control label-inline">Weekly Use</label> \
