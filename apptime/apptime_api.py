@@ -44,11 +44,15 @@ def device():
     logging.info("Registering new device for %s", data["name"])
     return flask.jsonify(**{"id":str(uuid.uuid4())})
 
-@app.route("/apptime/users/<username>/devices", methods=["GET"])
+@app.route("/apptime/user/<username>/devices", methods=["GET"])
 @crossdomain(origin='*')
 def user_devices(username):
     return flask.jsonify(**{'devices':[{'device_name': 'Galaxy Nexus',  'id': '123'}]})
 
+@app.route("/apptime/users", methods=["GET"])
+@crossdomain(origin='*')
+def users():
+    return flask.jsonify(**{'users':[{'name': 'Tommy'}, {'name': 'Sandy'}]})
 
 def start_server():
     port = int(os.environ.get('PORT', 5000))
