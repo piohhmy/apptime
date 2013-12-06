@@ -36,7 +36,6 @@ def usage(username):
         })
     if flask.request.method == 'POST':
         logging.info("Received %s", flask.request.data)
-        if(flask.request.get_json(force))
         cat = categorize(flask.request.get_json(force=True))
         mongo_repo.insert(username, cat, flask.request.get_json(force=True))
         if username in active_curfew:
