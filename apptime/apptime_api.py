@@ -4,6 +4,9 @@ import json
 import logging
 import os
 import uuid
+import datetime
+import requests
+import urllib
 from flask_helper import crossdomain
 from apptime import mongo_repo
 
@@ -11,6 +14,7 @@ app = Flask(__name__, static_url_path='')
 logging.basicConfig(level=logging.INFO)
 
 active_curfew =[] 
+curfew_time = {}
 
 @app.route('/')
 @crossdomain(origin='*')
@@ -28,9 +32,6 @@ def usage(username):
                        },
                        {"category": "Social", "apps" : 
                               mongo_repo.find_rec(username, "Social")
-                       },
-                       {"category": "Other", "apps" : 
-                              mongo_repo.find_rec(username, "Other")
                        }
                        ]
         })
@@ -38,8 +39,12 @@ def usage(username):
         logging.info("Received %s", flask.request.data)
         cat = categorize(flask.request.get_json(force=True))
         mongo_repo.insert(username, cat, flask.request.get_json(force=True))
+        if username in curfew_time:
+            if datetime.datetime.now() - curfew_time[username] > datetime.timedelta(seconds=30):
+                send_parent_sms(username)
         if username in active_curfew:
             active_curfew.remove(username)
+            curfew_time[username] = datetime.datetime.now()
             return flask.jsonify(**{"curfew_expired":True})
         else:
             return flask.jsonify(**{"curfew_expired":False})
@@ -68,16 +73,18 @@ def curfew(username):
     return flask.jsonify(**{})
 
 def categorize(data):
-    try:
-        if data["name"] in ["Super Mario Brothers", "Candy Crush"]:
-            return "Game"
-        elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn"]:
-            return "Social"
-        else:
-            return "Other"
-    except KeyError as ex:
-        logging.exception("Bad Data: %s", data)
-    
+    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
+        return "Game"
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Phone"]:
+        return "Social"
+    else:
+        return "Other"
+
+def send_parent_sms(username):
+    msg = "%s is violating their curfew!" % username 
+    url = "http://wolverines.devpsite.info:3000/baby_monitor/send_message?%s" % urllib.urlencode({"message": msg})
+    requests.post(url)
+
 def start_server():
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
