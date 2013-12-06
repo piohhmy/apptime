@@ -8,7 +8,7 @@ Build Status
 
 API Reference
 -----------
-### GET /apptime/user/<username>/apps/usage
+### GET /apptime/user/\<username\>/apps/usage
 Response:
 ```json
 { "usage": [
@@ -25,7 +25,7 @@ Response:
                        ]
         } 
 ```
-### POST /apptime/user/<username>/apps/usage
+### POST /apptime/user/\<username\>/apps/usage
 Response:
 ```json
 {}
@@ -34,7 +34,7 @@ Response:
 ```json
 {"id":"61de5f49-c5b8-4afe-ae52-6496d3044770"}
 ```
-### GET /apptime/user/<username>/devices
+### GET /apptime/user/\<username\>/devices
 ```json
 {"devices":[{"device_name": "Galaxy Nexus",  "id": "123"}]}
 ```
