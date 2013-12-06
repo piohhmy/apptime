@@ -5,7 +5,7 @@ import logging
 import os
 import uuid
 from flask_helper import crossdomain
-import mongo_repo
+from apptime import mongo_repo
 
 app = Flask(__name__, static_url_path='')
 logging.basicConfig(level=logging.INFO)
@@ -35,6 +35,7 @@ def usage(username):
         })
     if flask.request.method == 'POST':
         logging.info("Received %s", flask.request.data)
+        mongo_repo.insert(username, flask.request.data)
         return flask.jsonify(**{})
 
 @app.route("/apptime/device", methods=["POST"])
