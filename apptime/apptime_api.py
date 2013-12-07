@@ -73,9 +73,9 @@ def curfew(username):
     return flask.jsonify(**{})
 
 def categorize(data):
-    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
+    if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam", "FIFA"]:
         return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora"]:
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Chorme", "Skype"]:
         return "Social"
     else:
         return "Other"
