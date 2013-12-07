@@ -82,8 +82,8 @@ def categorize(data):
 
 def send_parent_sms(username):
     msg = "%s is violating their curfew!" % username 
-    url = "http://wolverines.devpsite.info:3000/baby_monitor/send_message?%s" % urllib.urlencode({"message": msg})
-    requests.post(url)
+    #url = "http://wolverines.devpsite.info:3000/baby_monitor/send_message?%s" % urllib.urlencode({"message": msg})
+    #requests.post(url)
 
 def start_server():
     port = int(os.environ.get('PORT', 5000))
