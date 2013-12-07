@@ -75,7 +75,7 @@ def curfew(username):
 def categorize(data):
     if data["name"] in ["Super Mario Brothers", "Candy Crush", "Shazam"]:
         return "Game"
-    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora", "Phone"]:
+    elif data["name"] in ["Facebook", "Twitter", "Snapchat", "LinkedIn", "Quora"]:
         return "Social"
     else:
         return "Other"
