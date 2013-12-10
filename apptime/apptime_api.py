@@ -9,6 +9,7 @@ import requests
 import urllib
 from flask_helper import crossdomain
 from apptime import mongo_repo
+from apptime import sendgrid_api
 
 app = Flask(__name__, static_url_path='')
 logging.basicConfig(level=logging.INFO)
@@ -82,6 +83,7 @@ def categorize(data):
 
 def send_parent_sms(username):
     msg = "%s is violating their curfew!" % username 
+    sendgrid_api.send_msg("omshaikh@gmail.com", msg)
     #url = "http://wolverines.devpsite.info:3000/baby_monitor/send_message?%s" % urllib.urlencode({"message": msg})
     #requests.post(url)
 
