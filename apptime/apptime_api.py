@@ -43,6 +43,7 @@ def usage(username):
         if username in curfew_time:
             if datetime.datetime.now() - curfew_time[username] > datetime.timedelta(seconds=30):
                 send_parent_sms(username)
+                curfew_time.remove(username)
         if username in active_curfew:
             active_curfew.remove(username)
             curfew_time[username] = datetime.datetime.now()
