@@ -46,6 +46,8 @@ def usage(username):
         if username in active_curfew:
             active_curfew.remove(username)
             curfew_time[username] = datetime.datetime.now()
+
+            sendgrid_api.send_msg("9162218319@txt.att.net", msg)
             return flask.jsonify(**{"curfew_expired":True})
         else:
             return flask.jsonify(**{"curfew_expired":False})
@@ -84,8 +86,6 @@ def categorize(data):
 def send_parent_sms(username):
     msg = "%s is violating their curfew!" % username 
     sendgrid_api.send_msg("5038805665@txt.att.net", msg)
-    #url = "http://wolverines.devpsite.info:3000/baby_monitor/send_message?%s" % urllib.urlencode({"message": msg})
-    #requests.post(url)
 
 def start_server():
     port = int(os.environ.get('PORT', 5000))
