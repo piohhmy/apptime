@@ -48,7 +48,7 @@ def usage(username):
             active_curfew.remove(username)
             curfew_time[username] = datetime.datetime.now()
 
-            sendgrid_api.send_msg("9162218319@txt.att.net", msg)
+            sendgrid_api.send_msg("9162218319@txt.att.net", 'Your curfew is up!')
             return flask.jsonify(**{"curfew_expired":True})
         else:
             return flask.jsonify(**{"curfew_expired":False})
